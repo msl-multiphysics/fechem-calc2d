@@ -270,12 +270,12 @@ def _region_to_grid(points: np.ndarray, region: RegionMesh):
     return pv.UnstructuredGrid(cell_arr.ravel(), celltypes, points)
 
 
-def _region_colors(n: int, cmap_name: str) -> list[tuple]:
-    """n discrete RGB colors from a categorical colormap (stable mesh+label match)."""
+def _region_colors(indices: list[int], cmap_name: str) -> list[tuple]:
+    """RGB colors from a categorical colormap keyed by FEChem indices."""
     import matplotlib.pyplot as plt
 
     cmap = plt.get_cmap(cmap_name)
-    return [cmap(i % cmap.N)[:3] for i in range(n)]
+    return [cmap(int(i) % cmap.N)[:3] for i in indices]
 
 
 def _contrast_text_color(rgb) -> str:
@@ -410,7 +410,8 @@ def render_snapshot(
     label_items: list[tuple[RegionMesh, tuple]] = []
 
     def _add_group(regions: list[RegionMesh], cmap_name: str, **mesh_kwargs):
-        colors = _region_colors(len(regions), cmap_name)
+        # Gmsh physical tag = FEChem index + 1
+        colors = _region_colors([r.tag - 1 for r in regions], cmap_name)
         for region, color in zip(regions, colors):
             grid = _region_to_grid(snap.points, region)
             plotter.add_mesh(grid, color=color, **mesh_kwargs)
