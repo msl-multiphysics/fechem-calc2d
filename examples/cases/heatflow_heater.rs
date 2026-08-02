@@ -96,15 +96,15 @@ fn main() -> Result<(), FEChemError> {
 
     // constant domain scalars
     // arguments: domain, value, output_file
-    let vlcp_c = vars.add_scldom_con(dom_c, 1000.0 * 0.1, "examples/output_heatflow_heater/vlcp_c.vtu".to_string())?;  // volumetric heat capacity (rho * cp)
-    let vlcp_b = vars.add_scldom_con(dom_b, 1.0, "examples/output_heatflow_heater/vlcp_b.vtu".to_string())?;  // unused for steady conduction-only solid
-    let vlcp_t = vars.add_scldom_con(dom_t, 1.0, "examples/output_heatflow_heater/vlcp_t.vtu".to_string())?;  // unused for steady conduction-only solid
-    let cond_c = vars.add_scldom_con(dom_c, 0.1, "examples/output_heatflow_heater/cond_c.vtu".to_string())?;  // thermal conductivity
-    let cond_b = vars.add_scldom_con(dom_b, 1.0, "examples/output_heatflow_heater/cond_b.vtu".to_string())?;  // thermal conductivity
-    let cond_t = vars.add_scldom_con(dom_t, 1.0, "examples/output_heatflow_heater/cond_t.vtu".to_string())?;  // thermal conductivity
-    let hsrc_c = vars.add_scldom_con(dom_c, 0.0, "examples/output_heatflow_heater/hsrc_c.vtu".to_string())?;  // heat source (positive if source; negative if sink)
-    let hsrc_b = vars.add_scldom_con(dom_b, 200.0, "examples/output_heatflow_heater/hsrc_b.vtu".to_string())?;  // heat source
-    let hsrc_t = vars.add_scldom_con(dom_t, 200.0, "examples/output_heatflow_heater/hsrc_t.vtu".to_string())?;  // heat source
+    let vlcp_c = vars.add_scldom_con(dom_c, 1000.0 * 0.1, "".to_string())?;  // volumetric heat capacity (rho * cp)
+    let vlcp_b = vars.add_scldom_con(dom_b, 1.0, "".to_string())?;  // unused for steady conduction-only solid
+    let vlcp_t = vars.add_scldom_con(dom_t, 1.0, "".to_string())?;  // unused for steady conduction-only solid
+    let cond_c = vars.add_scldom_con(dom_c, 0.1, "".to_string())?;  // thermal conductivity
+    let cond_b = vars.add_scldom_con(dom_b, 1.0, "".to_string())?;  // thermal conductivity
+    let cond_t = vars.add_scldom_con(dom_t, 1.0, "".to_string())?;  // thermal conductivity
+    let hsrc_c = vars.add_scldom_con(dom_c, 0.0, "".to_string())?;  // heat source (positive if source; negative if sink)
+    let hsrc_b = vars.add_scldom_con(dom_b, 200.0, "".to_string())?;  // heat source
+    let hsrc_t = vars.add_scldom_con(dom_t, 200.0, "".to_string())?;  // heat source
 
     // constant boundary scalars
     // arguments: boundary, value, output_file

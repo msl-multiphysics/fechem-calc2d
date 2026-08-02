@@ -1,4 +1,4 @@
-"""VTU loading and field argument normalization."""
+"""VTU loading and property / field argument helpers."""
 
 from __future__ import annotations
 
@@ -68,29 +68,24 @@ def remap_vtu_to_domain(
         raise ValueError(f"VTU did not cover {missing} domain node(s)")
     return out
 
-def as_scalar_field(field: Any, n_nodes: int) -> np.ndarray:
-    """Broadcast a scalar constant or validate a nodal scalar array."""
-    if np.isscalar(field):
-        return np.full(n_nodes, float(field), dtype=float)
-    arr = np.asarray(field, dtype=float)
-    if arr.ndim != 1 or arr.shape[0] != n_nodes:
-        raise ValueError(
-            f"Scalar field must be a float or length-{n_nodes} array, got shape {arr.shape}"
-        )
-    return arr
+
+def eval_prop_scl(prop: Any, unk_q: float) -> float:
+    """Evaluate a scalar property: constant or ``Callable[[float], float]``."""
+    if callable(prop) and not np.isscalar(prop):
+        return float(prop(unk_q))
+    return float(prop)
 
 
-def as_vector_field(field: Any, n_nodes: int) -> np.ndarray:
-    """Broadcast a constant 2-vector or validate a nodal (n, 2) array."""
-    if isinstance(field, (tuple, list)) and len(field) == 2 and all(
-        np.isscalar(c) for c in field
-    ):
-        return np.tile(np.asarray(field, dtype=float), (n_nodes, 1))
-    arr = np.asarray(field, dtype=float)
-    if arr.ndim == 1 and arr.shape[0] == 2:
-        return np.tile(arr, (n_nodes, 1))
-    if arr.ndim == 2 and arr.shape == (n_nodes, 2):
-        return arr
-    raise ValueError(
-        f"Vector field must be length-2 constant or shape ({n_nodes}, 2), got {arr.shape}"
-    )
+def eval_prop_scl_of_vec(prop: Any, vel_q: np.ndarray) -> float:
+    """Evaluate a scalar property of a vector: constant or ``Callable[[ndarray], float]``."""
+    if callable(prop) and not np.isscalar(prop):
+        return float(prop(vel_q))
+    return float(prop)
+
+
+def eval_prop_vec(prop: Any, vec_q: np.ndarray) -> np.ndarray:
+    """Evaluate a vector property: float scale, or ``Callable[[ndarray], ndarray]``."""
+    if callable(prop) and not np.isscalar(prop):
+        out = np.asarray(prop(vec_q), dtype=float).reshape(2)
+        return out
+    return float(prop) * np.asarray(vec_q, dtype=float)

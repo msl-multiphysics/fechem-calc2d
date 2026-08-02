@@ -86,12 +86,12 @@ fn main() -> Result<(), FEChemError> {
 
     // constant domain scalars
     // arguments: domain, value, output_file
-    let cond_m = vars.add_scldom_con(dom_m, 0.5, "examples/output_heat_multi/cond_m.vtu".to_string())?;  // thermal conductivity
-    let cond_b = vars.add_scldom_con(dom_b, 1.0, "examples/output_heat_multi/cond_b.vtu".to_string())?;  // thermal conductivity
-    let cond_t = vars.add_scldom_con(dom_t, 1.0, "examples/output_heat_multi/cond_t.vtu".to_string())?;  // thermal conductivity
-    let hsrc_m = vars.add_scldom_con(dom_m, 0.0, "examples/output_heat_multi/hsrc_m.vtu".to_string())?;  // heat source (positive if source; negative if sink)
-    let hsrc_b = vars.add_scldom_con(dom_b, -500.0, "examples/output_heat_multi/hsrc_b.vtu".to_string())?;  // heat source (positive if source; negative if sink)
-    let hsrc_t = vars.add_scldom_con(dom_t, 500.0, "examples/output_heat_multi/hsrc_t.vtu".to_string())?;  // heat source (positive if source; negative if sink)
+    let cond_m = vars.add_scldom_con(dom_m, 0.5, "".to_string())?;  // thermal conductivity
+    let cond_b = vars.add_scldom_con(dom_b, 1.0, "".to_string())?;  // thermal conductivity
+    let cond_t = vars.add_scldom_con(dom_t, 1.0, "".to_string())?;  // thermal conductivity
+    let hsrc_m = vars.add_scldom_con(dom_m, 0.0, "".to_string())?;  // heat source (positive if source; negative if sink)
+    let hsrc_b = vars.add_scldom_con(dom_b, -500.0, "".to_string())?;  // heat source (positive if source; negative if sink)
+    let hsrc_t = vars.add_scldom_con(dom_t, 500.0, "".to_string())?;  // heat source (positive if source; negative if sink)
 
     // constant boundary scalars
     // arguments: boundary, value, output_file
