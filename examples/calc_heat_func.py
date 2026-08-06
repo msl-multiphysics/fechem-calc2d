@@ -21,6 +21,7 @@ print(H_v0)
 # diffusive line integral (-k * grad(T) . n dl); n is outward unit normal
 # arguments: boundary or interface index, diffusivity (float or callable), scalar field
 # should work even if the diffusivity is constant
+# WARNING: diffusive fluxes are not necessarily conservative (see readme.txt).
 q_s1 = calc.lineint_scl_diff(1, lambda T: 0.1 + 0.3 * T, T_v0)  # returns float64
 # q_s1 = calc.lineint_scl_diff(1, 0.1, T_v0)  # returns float64
 print(q_s1)
