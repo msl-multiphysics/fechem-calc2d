@@ -112,12 +112,6 @@ fn main() -> Result<(), FEChemError> {
     let temp_bs = vars.add_sclbnd_con(bnd_bs, 400.0, "".to_string())?;  // temperature
     let temp_ts = vars.add_sclbnd_con(bnd_ts, 400.0, "".to_string())?;  // temperature
 
-    // unknown interface scalars
-    // arguments: interface, initial_value, output_file
-    // lagrange multipliers are needed for continuity interfaces
-    let lmd_bc = vars.add_sclitf_unk(itf_bc, 0.0, "".to_string())?;  // lagrange multiplier
-    let lmd_tc = vars.add_sclitf_unk(itf_tc, 0.0, "".to_string())?;  // lagrange multiplier
-
     // momentum transfer
 
     // unknown domain vectors
@@ -163,8 +157,8 @@ fn main() -> Result<(), FEChemError> {
     phys.add_hout_bnd(bnd_o);  // arguments: boundary
     phys.add_temp_bnd(bnd_bs, temp_bs);  // arguments: boundary, T
     phys.add_temp_bnd(bnd_ts, temp_ts);  // arguments: boundary, T
-    phys.add_hcnt_itf(itf_bc, lmd_bc);  // arguments: interface, lagrange multiplier
-    phys.add_hcnt_itf(itf_tc, lmd_tc);  // arguments: interface, lagrange multiplier
+    phys.add_hcnt_itf(itf_bc);  // arguments: interface
+    phys.add_hcnt_itf(itf_tc);  // arguments: interface
     phys.add_flow_dom(dom_c, vel, pres, den, visc, fce);  // arguments: domain, v, p, rho, mu, f
     phys.add_vel_bnd(bnd_i, vel_i);  // arguments: boundary, v
     phys.add_pres_bnd(bnd_o, pres_o);  // arguments: boundary, p

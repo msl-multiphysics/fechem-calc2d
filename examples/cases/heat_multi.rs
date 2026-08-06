@@ -99,11 +99,6 @@ fn main() -> Result<(), FEChemError> {
     let temp_br = vars.add_sclbnd_con(bnd_br, 300.0, "".to_string())?;  // temperature
     let temp_rt = vars.add_sclbnd_con(bnd_rt, 300.0, "".to_string())?;  // temperature
     let temp_tb = vars.add_sclbnd_con(bnd_tb, 300.0, "".to_string())?;  // temperature
-
-    // unknown interface scalars
-    // arguments: interface, initial_value, output_file
-    // lagrange multipliers are needed for continuity interfaces
-    let lmd_bm = vars.add_sclitf_unk(itf_bm, 0.0, "".to_string())?;  // lagrange multiplier
     
     // constant interface scalars
     // arguments: interface, value, output_file
@@ -123,7 +118,7 @@ fn main() -> Result<(), FEChemError> {
     phys.add_temp_bnd(bnd_br, temp_br);  // arguments: boundary, T
     phys.add_temp_bnd(bnd_rt, temp_rt);  // arguments: boundary, T
     phys.add_temp_bnd(bnd_tb, temp_tb);  // arguments: boundary, T
-    phys.add_cont_itf(itf_bm, lmd_bm);  // arguments: interface, lagrange multiplier
+    phys.add_cont_itf(itf_bm);  // arguments: interface
     phys.add_hres_itf(itf_tm, hres_tm);  // arguments: interface, contact resistance
 
     // physics solver
